@@ -30,6 +30,14 @@ exports.createWord = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.deleteWord = catchAsync(async (req, res, next) => {
+  await Word.deleteOne({word: req.body.word});
+  res.status(204).json({
+    status: 'success',
+    data: null
+  });
+});
+
 exports.getCustomWords = catchAsync(async (req, res, next) => {
   const difficulties = ['easy', 'medium', 'hard'];
   let words = [];

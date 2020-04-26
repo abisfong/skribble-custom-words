@@ -7,7 +7,8 @@ const router = express.Router();
 router
   .route('/')
   .get(wordController.getAllWords)
-  .post(wordController.createWord);
+  .post(wordController.createWord)
+  .delete(wordController.deleteWord);
 
 router
   .route('/custom')
