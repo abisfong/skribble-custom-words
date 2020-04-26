@@ -56,7 +56,7 @@ app.use(express.static(__dirname+'/public'));
 // });
 
 // 2) ROUTES
-app.use('/api/v1/words', wordRouter);
+app.use('/', wordRouter);
 
 // 3)
 
