@@ -20,4 +20,9 @@
   else
     .no-list
       p.no-list__a--p NO WORDS FOUND
-      a.no-list__a(href='/') add some words
+      if user
+        a.no-list__a(href='/') Add some words!
+      else
+        a.no-list__a(href='/signup') Sign up to add words!
+        br
+        a.no-list__a(href='/signup') Already have an account? Login
