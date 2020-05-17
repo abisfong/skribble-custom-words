@@ -1,0 +1,12 @@
+extends base
+block content
+  .container(style='text-align: center;')
+    i.fas.fa-kiwi-bird.signup--logo(style='color: transparent; font-size: 20vw;')
+    form.form.form--signup
+      input#name.input(placeholder='name' autocomplete='off' spellcheck='false' required)
+      input#username.input(placeholder='username' autocomplete='off' spellcheck='false' required)
+      input#email.input(type='email' placeholder='email' autocomplete='off' spellcheck='false' required)
+      input#password.input(type='password' placeholder='password' autocomplete='off' spellcheck='false' required minlength='8')
+      input#password-confirm.input.input--signup(type='password' placeholder='confirm password' autocomplete='off' spellcheck='false' required minlength='8')
+      input.input--submit(type='submit')
+      a.form__a.input--message(href='/login') Already have an account? Sign in.

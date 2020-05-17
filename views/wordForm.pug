@@ -1,0 +1,9 @@
+form(method='POST' action='/').form
+  label(for='submitBtn').label--add-btn
+    i.fas.fa-plus.label__i
+  input(type='submit' id='submitBtn').input--submit
+  input.input--bar(type='text' name='word' placeholder='enter a word' autocomplete='off' spellcheck='false' required)
+  input.input--difficulty(name='difficulty' value='easy')
+  .difficulty-selection
+    a.arrow-container.arrow-container__el--left-arrow-bg
+    a.arrow-container.arrow-container__el--right-arrow-bg

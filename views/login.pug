@@ -1,0 +1,10 @@
+extends base
+block content
+  .container(style='text-align: center;')
+    i.fas.fa-palette.login--logo(style='color: transparent; font-size: 25vw;')
+    form.form.form--login
+      input#user.input.input--login-email(type='text' placeholder='email or username')
+      input#password.input.input--login-password(type='password' placeholder='password' minlength='8')
+      input.input--submit(type='submit')
+      a.input--message(href='/forgotPassword') forgot your password?
+      a.input--message(href='/signup') Don't have an account? Sign up.

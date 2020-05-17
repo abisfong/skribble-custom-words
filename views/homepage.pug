@@ -1,0 +1,9 @@
+extends base
+block content
+  .container
+    if user
+      include nav
+      include wordForm
+    else
+      include auth
+    include list

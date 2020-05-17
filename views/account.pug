@@ -1,0 +1,17 @@
+extends base
+block content
+  .container
+    form.form--user-info
+      p.input--account(style='color: white; cursor: default;') Account Information
+      input#name.input.input--account(placeholder=user.name autocomplete='off' spellcheck='false')
+      input#username.input.input--account(placeholder=user.username autocomplete='off' spellcheck='false')
+      input#email.input.input--account(type='email' placeholder=user.email autocomplete='off' spellcheck='false')
+      input.a.input--account-submit(type='submit' value='Save')
+    form.form--password-change
+      p.input--account(style='color: white; margin-top: 5vh; cursor: default;') Change Passsword
+      input#current-password.input.input--account(type='password' placeholder='current password' autocomplete='off' spellcheck='false' required minlength='8')
+      input#new-password.input.input--account(type='password' placeholder='new password' autocomplete='off' spellcheck='false' required minlength='8')
+      input#confirm-new-password.input.input--account(type='password' placeholder='confirm password' autocomplete='off' spellcheck='false' required minlength='8')
+      input.a.input--account-submit(type='submit' value='Save')
+    h1.h1.h1--your-list-title YOUR LIST
+    include list

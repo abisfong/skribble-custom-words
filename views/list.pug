@@ -1,0 +1,23 @@
+.list
+  -words = words.reverse();
+  if words.length > 0
+    each word in words
+      li.list__item(class= dupKey? dupKey === word.word ? 'list__item--duplicate-entry' : '' : '')
+        if user && (word.user.equals(user._id) || user.role == 'admin')
+          .list__item__edit(onclick=`deleteWord("${word.word}")`)
+            a.far.fa-trash-alt
+        else
+          .list__item__edit
+            a.tooltip.fas.fa-info-circle(value=word.username)
+              p.tooltiptext= word.username
+        .list__item__word= word.word
+        if word.difficulty === 'easy'
+          .list__item__difficulty--easy
+        if word.difficulty === 'medium'
+          .list__item__difficulty--medium
+        if word.difficulty === 'hard'
+          .list__item__difficulty--hard
+  else
+    .no-list
+      p.no-list__a--p NO WORDS FOUND
+      a.no-list__a(href='/') add some words

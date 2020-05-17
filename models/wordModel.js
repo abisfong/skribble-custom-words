@@ -27,7 +27,13 @@ const wordSchema = new mongoose.Schema({
   difficulty: {
     type: String,
     required: true
-  }
+  },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: [true, 'Review must reference a user']
+  },
+  username: String
 }, {
   toJSON: toObjAndJSONOptions,
   toObject: toObjAndJSONOptions,

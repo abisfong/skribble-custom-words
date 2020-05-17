@@ -4,34 +4,42 @@ const catchAsync = require('./../utils/catchAsync');
 const Word = require('./../models/wordModel');
 
 exports.getAllWords = catchAsync(async (req, res, next) => {
-  const words = await Word.find();
-  console.log(words);
-  res.status(200).json({
-    status: 'success',
-    results: words.length,
-    data: {
-      words
-    }
-  });
+  let query = Word.find();
+  if(req.originalUrl === '/me')
+    res.words = await query.find({username: req.user.username});
+  else
+    res.words = await query;
+  next();
 });
 
 exports.createWord = catchAsync(async (req, res, next) => {
-  const word = await Word.create({
-    word: req.body.word,
-    difficulty: req.body.difficulty,
-    length: req.body.word.length
-  });
-
-  res.status(201).json({
-    status: 'success',
-    data: {
-      word
-    }
-  });
+  try {
+    const word = await Word.create({
+      word: req.body.word,
+      difficulty: req.body.difficulty.toLowerCase(),
+      length: req.body.word.length,
+      user: req.user._id,
+      username: req.user.username
+    });
+  } catch(error) {
+    if (error.code != 11000)
+      throw error;
+    res.duplicateKeyFound = true;
+  }
+  next();
 });
 
 exports.deleteWord = catchAsync(async (req, res, next) => {
-  await Word.deleteOne({word: req.body.word});
+  const word = await Word.findOne({word: req.body.word});
+
+  if(!word)
+    throw new AppError(`'${req.body.word}' not found`);
+
+  if(req.user._id.equals(word.user))
+    await Word.deleteOne({word: req.body.word});
+  else
+    throw new AppError(`'${req.body.word}' can only be deleted by ${req.user.username}`);
+
   res.status(204).json({
     status: 'success',
     data: null
