@@ -15,7 +15,7 @@ exports.getAllWords = catchAsync(async (req, res, next) => {
 exports.createWord = catchAsync(async (req, res, next) => {
   try {
     const word = await Word.create({
-      word: req.body.word,
+      word: req.body.word.trim(),
       difficulty: req.body.difficulty.toLowerCase(),
       length: req.body.word.length,
       user: req.user._id,
