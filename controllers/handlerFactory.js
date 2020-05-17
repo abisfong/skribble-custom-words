@@ -1,5 +1,5 @@
 // jshint esversion: 9
-const APIFeatures = require('./../utils/APIFeatures');
+const apiFeatures = require('./../utils/apiFeatures');
 const AppError = require('./../utils/appError');
 const catchAsync = require('./../utils/catchAsync');
 
@@ -35,7 +35,7 @@ exports.getAll = Model =>
     if(req.params.tourId && modelNamePlural === 'Reviews')
       filter.tour = req.params.tourId;
 
-    const features = new APIFeatures(Model.find(filter), req.query)
+    const features = new apiFeatures(Model.find(filter), req.query)
       .filter()
       .sort()
       .select()
