@@ -14,7 +14,7 @@ exports.getAllWords = catchAsync(async (req, res, next) => {
 
 exports.createWord = catchAsync(async (req, res, next) => {
   try {
-    const word = await Word.create({
+    await Word.create({
       word: req.body.word.trim(),
       difficulty: req.body.difficulty.toLowerCase(),
       length: req.body.word.length,
@@ -24,7 +24,7 @@ exports.createWord = catchAsync(async (req, res, next) => {
   } catch(error) {
     if (error.code != 11000)
       throw error;
-    res.duplicateKeyFound = true;
+    res.dupKey = req.body.word.trim();
   }
   next();
 });
