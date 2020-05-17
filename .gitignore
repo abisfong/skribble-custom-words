@@ -1,0 +1,5 @@
+# ignore node binary files
+node_modules/
+
+# ignore DS_Stores
+.DS_Store
