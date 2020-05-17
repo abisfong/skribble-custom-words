@@ -1,8 +1,13 @@
 // jshint esversion: 9
-require('./utils/errorSafetyNet'); // catches uncaught and unhandled errors
-
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+
+process.on('uncaughtException', err => {
+  console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
+  console.log(err);
+  process.exit(1);
+});
+
 dotenv.config({path: './config.env'});
 const app = require('./app');
 
@@ -27,9 +32,24 @@ mongoose.connect(dbConnection, {
   });
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log('%s\x1b[31m%s\x1b[0m','Skribbl custom words running on port ', port);
   console.log('%s\x1b[31m%s\x1b[0m%s', 'Running in ', process.env.NODE_ENV, ' mode');
+});
+
+process.on('unhandledRejection', err => {
+  console.log('UNHANDLED REJECTION! 💥 Shutting down...');
+  console.log(err);
+  server.close(() => {
+    process.exit(1);
+  });
+});
+
+process.on('SIGTERM', () => {
+  console.log('👋 SIGTERM RECEIVED. Shutting down gracefully');
+  server.close(() => {
+    console.log('💥 Process terminated!');
+  });
 });
 
 
