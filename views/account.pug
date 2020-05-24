@@ -1,17 +1,78 @@
 extends base
 block content
-  .container
-    form.form--user-info
-      p.input--account(style='color: white; cursor: default;') Account Information
-      input#name.input.input--account(placeholder=user.name autocomplete='off' spellcheck='false')
-      input#username.input.input--account(placeholder=user.username autocomplete='off' spellcheck='false')
-      input#email.input.input--account(type='email' placeholder=user.email autocomplete='off' spellcheck='false')
-      input.a.input--account-submit(type='submit' value='Save')
-    form.form--password-change
-      p.input--account(style='color: white; margin-top: 5vh; cursor: default;') Change Passsword
-      input#current-password.input.input--account(type='password' placeholder='current password' autocomplete='off' spellcheck='false' required minlength='8')
-      input#new-password.input.input--account(type='password' placeholder='new password' autocomplete='off' spellcheck='false' required minlength='8')
-      input#confirm-new-password.input.input--account(type='password' placeholder='confirm password' autocomplete='off' spellcheck='false' required minlength='8')
-      input.a.input--account-submit(type='submit' value='Save')
+  .c-container.c-container--center-third.c-container--m-top
+    p.p.p--account Account Information
+    form#form-user-info.form
+      .form_group
+        input#fname.input.input--name.input--fname(
+          placeholder=user.fname
+          autocomplete='off'
+          spellcheck='false'
+        )
+        input#lname.input.input--name.input--lname(
+          placeholder=user.lname
+          autocomplete='off'
+          spellcheck='false'
+        )
+      input#username.input.input--border-bottom(
+        placeholder=user.username
+        autocomplete='off'
+        spellcheck='false'
+      )
+      input#email.input.input--border-bottom(
+        type='email'
+        placeholder=user.email
+        autocomplete='off'
+        spellcheck='false'
+      )
+      input.input.input--submit.ani-hover-shiftup(type='submit' value='Update')
+    form.form.form--password-change
+      p.p.p--account Change Passsword
+      input#current-password.input.input--border-bottom(
+        type='password'
+        placeholder='current password'
+        autocomplete='off'
+        spellcheck='false'
+        required minlength='8'
+      )
+      input#new-password.input.input--border-bottom(
+        type='password'
+        placeholder='new password'
+        autocomplete='off'
+        spellcheck='false'
+        required
+        minlength='8'
+      )
+      input#confirm-new-password.input.input--border-bottom(
+        type='password'
+        placeholder='confirm password'
+        autocomplete='off'
+        spellcheck='false'
+        required
+        minlength='8'
+      )
+      input.input.input--submit.ani-hover-shiftup(type='submit' value='Update')
     h1.h1.h1--your-list-title YOUR LIST
     include list
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-EOF

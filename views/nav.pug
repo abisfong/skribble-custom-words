@@ -1,3 +1,8 @@
 nav.nav
-  a(href='/me').nav__el=user.username
-  a.nav__el.nav__el--logout logout
+  .nav__el
+    a.a.ani-hover-shiftup(href='/') home
+  if user
+    .nav__el
+      a.a.ani-hover-shiftup(href='/me')= user.username
+    .nav__el
+      a#logout.a.ani-hover-shiftup logout

@@ -3,3 +3,6 @@ node_modules/
 
 # ignore DS_Stores
 .DS_Store
+
+# ignore sass files
+sass/

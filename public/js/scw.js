@@ -1,21 +1,31 @@
 // jshint esversion: 9
-const list = document.querySelector('.list');
-const duplicateEntry = document.querySelector('.list__item--duplicate-entry');
-const difficultyInput = document.querySelector('.input--difficulty');
-const difficultySelection = document.querySelector('.difficulty-selection');
-const difficultyArrows = document.getElementsByClassName('arrow-container');
-const logoutBtn = document.querySelector('.nav__el--logout');
-const loginForm = document.querySelector('.form--login');
+/* --------------------------------------------------------------------------
+ * VARIABLES
+ * -------------------------------------------------------------------------- */
+// DOM elements
+const difficultyInput = document.querySelector('input[name="difficulty"]');
+const difficultySelection = document.querySelector('.c-wordlist__difficulty--difficulty-selection');
+const difficultyArrowLeft = document.querySelector('.fa-angle-left');
+const difficultyArrowRight = document.querySelector('.fa-angle-right');
+const duplicateEntry = document.querySelector('.c-wordlist__entry--duplicate-entry');
+const list = document.querySelector('.c-wordlist');
+const logoutBtn = document.querySelector('#logout');
+const loginForm = document.querySelector('#login-form');
 const passwordChangeForm = document.querySelector('.form--password-change');
-const signupForm = document.querySelector('.form--signup');
-const userInfoForm = document.querySelector('.form--user-info');
+const signupForm = document.querySelector('#form-signup');
+const tooltips = document.getElementsByClassName('c-tooltip');
+const userInfoForm = document.querySelector('#form-user-info');
 const username = document.getElementById('username');
 const yourList = document.querySelector('.h1--your-list-title');
+
+// helper variables
 var selection = 0;
 var timerId;
 
-// FUNCTIONS
-
+/* --------------------------------------------------------------------------
+ * FUNCTIONS
+ * -------------------------------------------------------------------------- */
+// change background color of difficulty selection in word form
 const changeColor = function(dir) {
   if(dir == 'prev')
     selection = selection - 1 >= 0 ? selection - 1 : 2;
@@ -34,23 +44,88 @@ const changeColor = function(dir) {
   }
 };
 
-const hideAlert = () => {
-  const el = document.querySelector('.alert');
-  if (el) el.parentElement.removeChild(el);
+const changePassword = async (data) => {
+  try {
+    const res = await axios({
+      method: 'PATCH',
+      url: '/api/v1/users/updatePassword',
+      data
+    });
+
+    if(res.data.status === 'success') {
+      showAlert('success', 'Password was successfully updated!');
+      setTimeout(() => {
+        location.assign('/me');
+      }, 3000);
+    }
+  } catch (err) {
+    showAlert('error', err.response.data.message);
+  }
 };
 
-// type is 'success' or 'error'
-const showAlert = (type, msg, time = 7) => {
-  let newMsg;
-  hideAlert();
+const changeUserInfo = async (data) => {
+  try {
+    const res = await axios({
+      method: 'PATCH',
+      url: '/api/v1/users/me',
+      data
+    });
 
-  if(type == 'error' && typeof(msg) == "string")
-    // newMsg = '<ul>'+msg.split('\n').map(el => `<li>${el}</li>`).join('')+'</ul>';
-    newMsg = msg.split('\n')[0];
+    if(res.data.status === 'success') {
+      showAlert('success', 'Your account information was successfully updated!');
+      setTimeout(() => {
+        location.assign('/me');
+      }, 3000);
+    }
+  } catch(err) {
+    showAlert('error', err.response.data.message);
+  }
+};
 
-  const markup = `<div class="alert alert--${type}">${newMsg ? newMsg : msg}</div>`;
-  document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
-  setTimeout(hideAlert, time * 1000);
+// Check if a username is taken using api
+const checkUsername = async () => {
+  try {
+    const res = await axios({
+      method: 'POST',
+      url: '/api/v1/users/username',
+      data: {
+        username: username.value
+      }
+    });
+    if(res.data.usernameIsTaken == true){
+      username.classList.add('input--invalid');
+    } else
+      username.classList.remove('input--invalid');
+  } catch(err) {
+    console.error('error attempting to check username availability');
+  }
+};
+
+const debounce = (fn, delay) => {
+  clearTimeout(timerId);
+  timerId = setTimeout(fn, delay);
+};
+
+const deleteWord = async (word) => {
+  try {
+    const res = await axios({
+      method: 'DELETE',
+      url: '/api/v1/words',
+      data: {
+        word
+      }
+    });
+
+    if (res.status == 204)
+      location.assign('/');
+  } catch(err) {
+    showAlert('error', err.response.data.message);
+  }
+};
+
+const hideAlert = () => {
+  const el = document.querySelector('.c-alert');
+  if (el) el.parentElement.removeChild(el);
 };
 
 const login = async (_user, password) => {
@@ -93,6 +168,19 @@ const logout = async () => {
   }
 };
 
+// <type> is 'success' or 'error'
+const showAlert = (type, msg, time = 7) => {
+  let newMsg;
+  hideAlert();
+
+  if(type == 'error' && typeof(msg) == "string")
+    newMsg = msg.split('\n')[0];
+
+  const markup = `<div class="c-alert c-alert--${type}">${newMsg ? newMsg : msg}</div>`;
+  document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
+  setTimeout(hideAlert, time * 1000);
+};
+
 const signup = async (data) => {
   try {
     const res = await axios({
@@ -102,7 +190,7 @@ const signup = async (data) => {
     });
 
     if (res.data.status === 'success') {
-      showAlert('success', 'Sign up successful! Welcome, '+data.name.split(' ')[0]+'!');
+      showAlert('success', 'Sign up successful! Welcome, '+data.fname+'!');
       setTimeout(() => {
         location.assign('/');
       }, 3000);
@@ -112,97 +200,31 @@ const signup = async (data) => {
   }
 };
 
-const checkUsername = async () => {
-  try {
-    const res = await axios({
-      method: 'POST',
-      url: '/api/v1/users/username',
-      data: {
-        username: username.value
-      }
-    });
-    if(res.data.usernameIsTaken == true){
-      username.classList.add('input--invalid');
-    } else
-      username.classList.remove('input--invalid');
-  } catch(err) {
-    console.error('error attempting to check username availability');
-  }
-};
+const tooltipToggle = el =>
+  () => {
+    if(el.style.visibility === 'hidden')
+      el.style.visibility = 'visible';
+    else
+      el.style.visibility = 'hidden';
+  };
 
-const deleteWord = async (word) => {
-  try {
-    const res = await axios({
-      method: 'DELETE',
-      url: '/api/v1/words',
-      data: {
-        word
-      }
-    });
+/* --------------------------------------------------------------------------
+ * DELEGATION
+ * -------------------------------------------------------------------------- */
 
-    if (res.status == 204)
-      location.assign('/');
-  } catch(err) {
-    showAlert('error', err.response.data.message);
-  }
-};
-
-const changeUserInfo = async (data) => {
-  try {
-    const res = await axios({
-      method: 'PATCH',
-      url: '/api/v1/users/me',
-      data
-    });
-
-    if(res.data.status === 'success') {
-      showAlert('success', 'Your account information was successfully updated!');
-      setTimeout(() => {
-        location.assign('/me');
-      }, 3000);
-    }
-  } catch(err) {
-    showAlert('error', err.response.data.message);
-  }
-};
-
-const changePassword = async (data) => {
-  try {
-    const res = await axios({
-      method: 'PATCH',
-      url: '/api/v1/users/updatePassword',
-      data
-    });
-
-    if(res.data.status === 'success') {
-      showAlert('success', 'Password was successfully updated!');
-      setTimeout(() => {
-        location.assign('/me');
-      }, 3000);
-    }
-  } catch (err) {
-    showAlert('error', err.response.data.message);
-  }
-};
-
-const debounce = (fn, delay) => {
-  clearTimeout(timerId);
-  timerId = setTimeout(fn, delay);
-};
-
-// DELEGATION
-
-if(duplicateEntry) {
-  list.scrollTop = duplicateEntry.offsetTop - list.offsetTop;
-}
-
-if(difficultyArrows.length > 0) {
-  difficultyArrows[0].addEventListener('click', function() {
+// Change color of difficulty selection in word form on arrow click
+if(difficultyArrowLeft && difficultyArrowRight) {
+  difficultyArrowLeft.addEventListener('click', function() {
     changeColor('prev');
   });
-  difficultyArrows[1].addEventListener('click', function() {
+  difficultyArrowRight.addEventListener('click', function() {
     changeColor('next');
   });
+}
+
+// Scroll list to duplicate word entry if previous input was a duplicate key
+if(duplicateEntry) {
+  list.scrollTop = duplicateEntry.offsetTop - list.offsetTop;
 }
 
 if(loginForm) {
@@ -220,43 +242,6 @@ if(logoutBtn) {
   });
 }
 
-if(signupForm){
-  signupForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const passwordConfirm = document.getElementById('password-confirm').value;
-    signup({
-      name,
-      username: username.value,
-      email,
-      password,
-      passwordConfirm
-    });
-  });
-}
-
-if(userInfoForm) {
-  userInfoForm.addEventListener('submit', e => {
-    let data = {};
-
-    e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-
-    if(name.length > 0)
-      data.name = name;
-    if(email.length > 0)
-      data.email = email;
-    if(username.value > 0)
-      data.username = username.value;
-
-    if(Object.values(data).length > 0)
-      changeUserInfo(data);
-  });
-}
-
 if(passwordChangeForm) {
   passwordChangeForm.addEventListener('submit', e => {
     e.preventDefault();
@@ -271,18 +256,70 @@ if(passwordChangeForm) {
   });
 }
 
+if(signupForm){
+  signupForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const fname = document.getElementById('fname').value;
+    const lname = document.getElementById('lname').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('password-confirm').value;
+    signup({
+      fname,
+      lname,
+      username: username.value,
+      email,
+      password,
+      passwordConfirm
+    });
+  });
+}
+
+// if(tooltips) {
+//   for(var i = 0; i < tooltips.length; i++) {
+//     tooltips[i].addEventListener(
+//       'click',
+//       tooltipToggle(tooltips[i].children[0])
+//     );
+//   }
+// }
+
+if(userInfoForm) {
+  userInfoForm.addEventListener('submit', e => {
+    let data = {};
+
+    e.preventDefault();
+    const fname = document.getElementById('fname').value;
+    const lname = document.getElementById('lname').value;
+    const email = document.getElementById('email').value;
+
+    if(fname > 0)
+      data.fname = fname;
+    if(lname > 0)
+      data.lname = lname;
+    if(email.length > 0)
+      data.email = email;
+    if(username.value > 0)
+      data.username = username.value;
+
+    if(Object.values(data).length > 0)
+      changeUserInfo(data);
+  });
+}
+
+// Check if username is taken as user input is recieved (before submit)
 if(username) {
   username.addEventListener('keyup', e => {
     debounce(checkUsername, 1200);
   });
 }
 
+// Scroll list into view on click of 'Your List' header in account view
 if(yourList) {
   yourList.addEventListener('click', e => {
-    document.querySelector('.list').scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-      inline: "nearest"
+    document.documentElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
     });
   });
 }

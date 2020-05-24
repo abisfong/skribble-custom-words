@@ -1,28 +1,89 @@
-.list
-  -words = words.reverse();
-  if words.length > 0
+-words = words.reverse();
+//-words = [];
+if words.length > 0
+  .c-wordlist
+    .c-wordlist__entry.c-wordlist_entry--labels
+      .c-wordlist__action-btn
+        .c-tooltip.fas.fa-info-circle
+          if(accountView)
+            .c-tooltip__text.c-tooltip__text--action-btn-usage
+              b USER ACTION BUTTONS
+              br
+              br
+              | Use &nbsp
+              i.far.fa-trash-alt
+              | &nbsp to delete an entry
+          else
+            .c-tooltip__text.c-tooltip__text--action-btn-usage
+              b USER ACTION BUTTONS
+              br
+              br
+              | Use &nbsp
+              i.fas.fa-info-circle
+              | &nbsp to look at the username of the owner of an entry
+              br
+              br
+              | Use &nbsp
+              i.far.fa-trash-alt
+              | &nbsp to delete an entry that you own
+      .c-wordlist__word.c-wordlist__word--label word
+      .c-wordlist__difficulty.c-wordlist__difficulty--label difficulty
     each word in words
-      li.list__item(class= dupKey? dupKey === word.word ? 'list__item--duplicate-entry' : '' : '')
-        if user && (word.user.equals(user._id) || user.role == 'admin')
-          .list__item__edit(onclick=`deleteWord("${word.word}")`)
-            a.far.fa-trash-alt
+      .c-wordlist__entry.ani-hover-shiftup(
+        class= dupKey?
+          dupKey === word.word ?
+            'c-wordlist__entry--duplicate-entry' : '' : ''
+      )
+        if user && (word.user.equals(user._id) || user.role === 'admin')
+          .c-wordlist__action-btn(onclick=`deleteWord("${word.word}")`)
+            i.far.fa-trash-alt
         else
-          .list__item__edit
-            a.tooltip.fas.fa-info-circle(value=word.username)
-              p.tooltiptext= word.username
-        .list__item__word= word.word
+          .c-wordlist__action-btn
+            .c-tooltip.fas.fa-info-circle
+              .c-tooltip__text.c-tooltip__text--wordlist-entry-owner
+                | #{word.username}
+        .c-wordlist__word= word.word
         if word.difficulty === 'easy'
-          .list__item__difficulty--easy
+          .c-wordlist__difficulty.c-wordlist__difficulty--easy
         if word.difficulty === 'medium'
-          .list__item__difficulty--medium
+          .c-wordlist__difficulty.c-wordlist__difficulty--medium
         if word.difficulty === 'hard'
-          .list__item__difficulty--hard
-  else
-    .no-list
-      p.no-list__a--p NO WORDS FOUND
-      if user
-        a.no-list__a(href='/') Add some words!
-      else
-        a.no-list__a(href='/signup') Sign up to add words!
-        br
-        a.no-list__a(href='/signup') Already have an account? Login
+          .c-wordlist__difficulty.c-wordlist__difficulty--hard
+else
+  .c-wordlist.c-wordlist--empty
+    p.p.p--wordlist NO WORDS FOUND
+    if user
+      a.a.a--user-action-msg.a--wordlist.ani-hover-shiftup(href='/') Add some words!
+    else
+      a.a.a--user-action-msg.a--wordlist.ani-hover-shiftup(href='/signup') Sign up to add words!
+      br
+      a.a.a--user-action-msg.a--wordlist.ani-hover-shiftup(href='/login') Already have an account? Login
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//- EOF

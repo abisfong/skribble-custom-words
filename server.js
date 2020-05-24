@@ -18,7 +18,19 @@ let dbConnection = dbConnectionType == 'local' ? process.env.DB_LOCAL : process.
 dbConnection = dbConnection.replace('<PASSWORD>', process.env.PASSWORD);
 dbConnection = dbConnection.replace('<DB_COLLECTION>', process.env.DB_COLLECTION);
 
-console.log('%s\x1b[31m%s\x1b[0m%s', 'Connecting to ', dbConnectionType, ' database...',);
+console.log(
+  '%s%s\x1b[31m%s\x1b[0m%s',
+  '\n--------------------------------------------------------------------\n',
+  'TIMESTAMP: ',
+  Date(Date.now()).toString(),
+  '\n--------------------------------------------------------------------'
+);
+console.log(
+  '%s\x1b[31m%s\x1b[0m%s',
+  'Connecting to ',
+  dbConnectionType,
+  ' database...',
+);
 
 mongoose.connect(dbConnection, {
   useNewUrlParser: true,
@@ -33,8 +45,17 @@ mongoose.connect(dbConnection, {
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
-  console.log('%s\x1b[31m%s\x1b[0m','Skribbl custom words running on port ', port);
-  console.log('%s\x1b[31m%s\x1b[0m%s', 'Running in ', process.env.NODE_ENV, ' mode');
+  console.log(
+    '%s\x1b[31m%s\x1b[0m',
+    'Skribbl custom words running on port ',
+    port
+  );
+  console.log(
+    '%s\x1b[31m%s\x1b[0m%s',
+    'Running in ',
+    process.env.NODE_ENV.toUpperCase(),
+    ' mode'
+  );
 });
 
 process.on('unhandledRejection', err => {

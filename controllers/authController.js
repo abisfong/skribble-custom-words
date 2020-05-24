@@ -52,7 +52,8 @@ const createResponse = (data, res, statusCode, user_id) => {
 
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
-    name: req.body.name,
+    fname: req.body.fname,
+    lname: req.body.lname,
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,

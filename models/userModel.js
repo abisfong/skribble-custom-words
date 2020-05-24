@@ -14,12 +14,19 @@ const toObjAndJSONOptions = {
 
 // SCHEMA
 const userSchema = new mongoose.Schema({
-  name: {
+  fname: {
     type: String,
     required: [true, 'Please enter your name'],
     trim: true,
-    maxlength: [30, 'Username length must be less than 30 characters'],
-    minlength: [1, 'Username must not be empty']
+    maxlength: [30, 'first name length must be less than 30 characters'],
+    minlength: [1, 'first name must not be empty']
+  },
+  lname: {
+    type: String,
+    required: [true, 'Please enter your name'],
+    trim: true,
+    maxlength: [30, 'last name length must be less than 30 characters'],
+    minlength: [1, 'last name must not be empty']
   },
   username: {
     type: String,
