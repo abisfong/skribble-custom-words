@@ -18,8 +18,11 @@ html {
   font-family: 'Lato', sans-serif;
 }
 
-input {
-  /* Style */
+input,
+input[type="text"],
+input[type="button"],
+input[type="submit"] {
+  -webkit-appearance: none;
   border-radius: 0;
   -webkit-border-radius: 0;
 }
@@ -345,6 +348,7 @@ input {
 
 .c-wordlist__difficulty {
   /* Dimensions */
+  box-sizing: border-box;
   width: 20%;
 
   /* Style */
@@ -361,7 +365,7 @@ input {
 
 .c-wordlist__difficulty--label {
   /* Spacing */
-  padding-top: 9px;
+  padding: 9px 8px 0;
 
   /* Style */
   color: white;
