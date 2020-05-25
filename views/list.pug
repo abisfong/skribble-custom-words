@@ -1,8 +1,9 @@
+- let zIndex = words.length + 1;
 -words = words.reverse();
 //-words = [];
 if words.length > 0
   .c-wordlist
-    .c-wordlist__entry.c-wordlist__entry--labels
+    .c-wordlist__entry.c-wordlist__entry--labels(style=`z-index: ${zIndex--};`)
       .c-wordlist__action-btn.c-wordlist__action-btn--bg-dark-grey
         .fas.fa-info-circle
       if(accountView)
@@ -33,6 +34,7 @@ if words.length > 0
         class= dupKey?
           dupKey === word.word ?
             'c-wordlist__entry--duplicate-entry' : '' : ''
+        style=`z-index: ${zIndex--};`
       )
         if user && (word.user.equals(user._id) || user.role === 'admin')
           .c-wordlist__action-btn.c-wordlist__action-btn--bg-light-grey(

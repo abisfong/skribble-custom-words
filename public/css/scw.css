@@ -170,7 +170,7 @@ input[type="submit"] {
 .c-tooltip {
   /* Position */
   position: absolute;
-  z-index: 2;
+  z-index: 100;
 
   /* Style */
   background-color: black;
@@ -295,7 +295,6 @@ input[type="submit"] {
   /* Position */
   position: sticky;
   top: 0;
-  z-index: 3;
 
   /* Style */
   background-color: #3d3d3f;
@@ -848,17 +847,16 @@ input[type="submit"] {
   }
 }
 
-@media (not(hover)) {
+/* @media (not(hover)) {
   .ani-hover-shiftup:hover,
   .ani-hover-shiftup:active {
-    /* Style */
     -webkit-transform: none;
     -mos-transform: none;
     -o-transform: none;
     transform: none;
     text-shadow: none;
   }
-}
+} */
 
 
 
