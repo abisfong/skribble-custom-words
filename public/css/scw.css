@@ -126,7 +126,7 @@ html {
   width: 100%;
 }
 
-.c-container--center-third {
+.c-container--center {
   /* Dimensions */
   width: 33.33vw;
 
@@ -157,13 +157,8 @@ html {
   text-align: center;
 }
 
-.c-tooltip {
-  /* Position */
-  position: relative;
-}
-
 /* Tooltip text */
-.c-tooltip__text {
+.c-tooltip {
   /* Position */
   position: absolute;
   z-index: 2;
@@ -175,15 +170,15 @@ html {
   visibility: hidden;
 }
 
-.c-tooltip:hover .c-tooltip__text {
+.c-wordlist__action-btn:hover + .c-tooltip{
   /* Style */
   visibility: visible;
 }
 
-.c-tooltip__text--wordlist-entry-owner {
+.c-tooltip--wordlist-entry-owner {
   /* Position */
-  left: -15px;
-  top: 28px;
+  left: 0;
+  top: 100%;
 
   /* Spacing */
   padding: 5px 4px;
@@ -194,14 +189,14 @@ html {
   text-align: center;
 }
 
-.c-tooltip__text--action-btn-usage {
+.c-tooltip--action-btn-usage {
   /* Dimensions */
   box-sizing: border-box;
-  width: 33.5vw;
+  width: 100%;
 
   /* Position */
-  left: -15px;
-  top: 27px;
+  left: 0;
+  top: 100%;
 
   /* Spacing */
   padding: 18px 24px;
@@ -268,10 +263,14 @@ html {
   /* Spacing */
   margin-top: 10px;
 
+  /* Position */
+  position: relative;
+
   /* Style */
   background-color: white;
   display: flex;
   font-size: 18px;
+  text-align: left;
 }
 
 .c-wordlist__entry--duplicate-entry {
@@ -280,7 +279,7 @@ html {
   background-image: linear-gradient(.375turn, #d300fb, #f600f9);
 }
 
-.c-wordlist_entry--labels {
+.c-wordlist__entry--labels {
   /* Dimensions */
   width: 100%;
 
@@ -307,10 +306,20 @@ html {
   text-align: center;
 }
 
+.c-wordlist__action-btn--bg-dark-grey {
+  /* Style */
+  background-color: #2f2f30;
+}
+
+.c-wordlist__action-btn--bg-light-grey {
+  /* Style */
+  background-color: #fbaf08;
+}
+
 .c-wordlist__word {
   /* Dimensions */
   box-sizing: border-box;
-  width: 72.5%;
+  width: 70%;
 
   /* Spacing */
   padding: 7px 0 7px 1vw;
@@ -330,11 +339,12 @@ html {
 
 .c-wordlist__difficulty {
   /* Dimensions */
-  width: 17.5%;
+  width: 20%;
 
   /* Style */
   cursor: default;
   text-align: center;
+  overflow-x: scroll;
 }
 
 .c-wordlist__difficulty--difficulty-selection {
@@ -433,21 +443,21 @@ html {
 
 .a--login {
   /* Spacing */
-  margin: 5px 0;
+  margin: 5px auto;
 
   /* Style */
   color: white;
   cursor: pointer;
-  display: block;
+  display: inline-block;
   text-decoration: none;
 }
 
 .a--signup {
   /* Spacing */
-  margin: 5px 0;
+  margin: 5px auto;
 
   /* Style */
-  display: block;
+  display: inline-block;
 }
 
 .a--wordlist,
@@ -620,6 +630,7 @@ html {
 
   /* Spacing */
   padding-left: 0;
+  padding-right: 0;
   margin-left: 75%;
 
   /* Style */
@@ -682,6 +693,7 @@ html {
 
   /* Spacing */
   display: flex;
+  font-size: 18px;
   justify-content: flex-start;
   /* calculated padding is (search_bar top margin) - (element font size) */
   padding-top: calc(3.25vh - .5em);
@@ -734,7 +746,69 @@ html {
 }
 
 
+/* --------------------------------------------------------------------------
+ * MEDIA QUERIES
+ * -------------------------------------------------------------------------- */
 
+@media screen and (max-width: 1133px) {
+  .c-container--center {
+    /* Dimensions */
+    width: 39.65vw;
+  }
+
+  .h1--your-list-title {
+    font-size: calc(39.65vw / 5.25)
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .c-container--center {
+    /* Dimensions */
+    width: 47.88vw;
+  }
+
+  .h1--your-list-title {
+    font-size: calc(47.88vw / 5.25)
+  }
+
+  .nav {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .c-container--center {
+    /* Dimensions */
+    width: 62.7vw;
+  }
+
+  .h1--your-list-title {
+    font-size: calc(62.7vw / 5.25)
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .c-container--center {
+    /* Dimensions */
+    width: 73.15vw;
+  }
+
+  .h1--your-list-title {
+    font-size: calc(73.15vw / 5.25)
+  }
+}
+
+@media (not(hover)) {
+  .ani-hover-shiftup:hover,
+  .ani-hover-shiftup:active {
+    /* Style */
+    -webkit-transform: none;
+    -mos-transform: none;
+    -o-transform: none;
+    transform: none;
+    text-shadow: none;
+  }
+}
 
 
 

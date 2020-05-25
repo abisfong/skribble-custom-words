@@ -1,6 +1,6 @@
 extends base
 block content
-  .c-container.c-container--center-third.c-container--m-top
+  .c-container.c-container--center.c-container--m-top
     .logo.logo--login.fas.fa-palette
     form#login-form.form
       input#user.input(type='text' placeholder='email or username')
@@ -9,4 +9,5 @@ block content
         type='submit'
       )
     a.a.a--login(href='/forgotPassword') forgot your password?
+    br
     a.a.a--login(href='/signup') Don't have an account? Sign up.

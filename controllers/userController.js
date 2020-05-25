@@ -26,11 +26,17 @@ exports.getMe = catchAsync(async (req, res, next) => {
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) CREATE ERROR IF USER POSTS PASSWORD DATA
-  if (req.body.password || req.body.passowrdConfirm)
+  if (req.body.password || req.body.passwordConfirm)
     throw new AppError('Invalid password change request', 400);
 
   // 2) FILTER OUT FIELD NAMES NOT ALLOWED
-  const filteredBody = filterObj(req.body, 'name', 'username', 'email');
+  const filteredBody = filterObj(
+    req.body,
+    'fname',
+    'lname',
+    'username',
+    'email'
+  );
 
   // 3) UPDATE USER DOCUMENT
   const updatedUser = await User.findByIdAndUpdate(req.params.id, filteredBody, {

@@ -293,9 +293,9 @@ if(userInfoForm) {
     const lname = document.getElementById('lname').value;
     const email = document.getElementById('email').value;
 
-    if(fname > 0)
+    if(fname.length > 0)
       data.fname = fname;
-    if(lname > 0)
+    if(lname.length > 0)
       data.lname = lname;
     if(email.length > 0)
       data.email = email;
