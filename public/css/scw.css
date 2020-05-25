@@ -18,6 +18,12 @@ html {
   font-family: 'Lato', sans-serif;
 }
 
+input {
+  /* Style */
+  border-radius: 0;
+  -webkit-border-radius: 0;
+}
+
 /* --------------------------------------------------------------------------
  * Animations
  * -------------------------------------------------------------------------- */
@@ -71,7 +77,7 @@ html {
 
 .logo--signup {
   /* Spacing */
-  margin: 3.5vh auto 0;
+  margin: 7.5vh auto 0;
 
   /* Style */
   background-image: -webkit-linear-gradient(.375turn, #272727, #2b272e, #383949), -webkit-linear-gradient(.375turn, yellow, yellow);
@@ -759,6 +765,16 @@ html {
   .h1--your-list-title {
     font-size: calc(39.65vw / 5.25)
   }
+
+  .logo--login {
+    /* Style */
+    font-size: 28.32vw;
+  }
+
+  .logo--signup {
+    /* Style */
+    font-size: 22.66vw;
+  }
 }
 
 @media screen and (max-width: 992px) {
@@ -769,6 +785,16 @@ html {
 
   .h1--your-list-title {
     font-size: calc(47.88vw / 5.25)
+  }
+
+  .logo--login {
+    /* Style */
+    font-size: 34.2vw;
+  }
+
+  .logo--signup {
+    /* Style */
+    font-size: 27.36vw;
   }
 
   .nav {
@@ -785,12 +811,32 @@ html {
   .h1--your-list-title {
     font-size: calc(62.7vw / 5.25)
   }
+
+  .logo--login {
+    /* Style */
+    font-size: 44.78vw;
+  }
+
+  .logo--signup {
+    /* Style */
+    font-size: 35.83vw;
+  }
 }
 
 @media screen and (max-width: 576px) {
   .c-container--center {
     /* Dimensions */
     width: 73.15vw;
+  }
+
+  .logo--login {
+    /* Style */
+    font-size: 52.25vw;
+  }
+
+  .logo--signup {
+    /* Style */
+    font-size: 41.8vw;
   }
 
   .h1--your-list-title {
