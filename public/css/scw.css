@@ -101,32 +101,31 @@ input[type="submit"] {
 .c-alert {
   /* Dimesions */
   box-sizing: border-box;
-  width: 33.33vw;
+  width: 25vw;
 
   /* Position */
-  left: 33.33vw;
-  top: 0;
+  left: 37.5vw;
+  top: calc(45vh - 1em);
 
   /* Spacing */
-  padding: 1vh 2vw;
+  padding: 5vh 2vw;
 
   /* Style */
   border-radius: 0 0 4px 4px;
-  box-sizing: border-box;
+  border: solid 2px #2f2f30;
   position: fixed;
   text-align: center;
-  z-index: 2;
+  z-index: 10000;
 }
 
 .c-alert--error {
   /* Style */
-  background-color: #ff4141;
+  background-color: #ff4141ee;
 }
 
 .c-alert--success {
   /* Style */
-  background-color: #5ba95d;
-  text-align: center;
+  background-color: #5ba95dee;
 }
 
 .c-container {
@@ -135,18 +134,19 @@ input[type="submit"] {
   width: 100%;
 }
 
-.c-container--center {
+.c-container--m-top {
+  /* Spacing */
+  margin-top: 7.5vh;
+}
+
+.c-container--center-third {
   /* Dimensions */
   width: 33.33vw;
 
   /* Spacing */
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
-}
-
-.c-container--m-top {
-  /* Spacing */
-  margin-top: 7.5vh;
 }
 
 .c-container--difficulty-selection {
@@ -769,7 +769,15 @@ input[type="submit"] {
  * -------------------------------------------------------------------------- */
 
 @media screen and (max-width: 1133px) {
-  .c-container--center {
+  .c-alert {
+    /* Dimensions */
+    width: 29.65vw;
+
+    /* Position */
+    left: calc((100vw - 29.65vw) / 2);
+  }
+
+  .c-container--center-third {
     /* Dimensions */
     width: 39.65vw;
   }
@@ -790,7 +798,15 @@ input[type="submit"] {
 }
 
 @media screen and (max-width: 992px) {
-  .c-container--center {
+  .c-alert {
+    /* Dimensions */
+    width: 35.91vw;
+
+    /* Position */
+    left: calc((100vw - 35.91vw) / 2);
+  }
+
+  .c-container--center-third {
     /* Dimensions */
     width: 47.88vw;
   }
@@ -811,7 +827,15 @@ input[type="submit"] {
 }
 
 @media screen and (max-width: 768px) {
-  .c-container--center {
+  .c-alert {
+    /* Dimensions */
+    width: 47.03vw;
+
+    /* Position */
+    left: calc((100vw - 47.03vw) / 2);
+  }
+
+  .c-container--center-third {
     /* Dimensions */
     width: 62.7vw;
   }
@@ -832,7 +856,15 @@ input[type="submit"] {
 }
 
 @media screen and (max-width: 576px) {
-  .c-container--center {
+  .c-alert {
+    /* Dimensions */
+    width: 54.87vw;
+
+    /* Position */
+    left: calc((100vw - 54.87vw) / 2);
+  }
+
+  .c-container--center-third {
     /* Dimensions */
     width: 73.15vw;
   }

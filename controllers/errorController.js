@@ -8,7 +8,7 @@ const handleCastErrorDB = err => {
 
 const handleDuplicateKeyError = err => {
   const errValue = Object.values(err.keyValue)[0];
-  const message = `'${errValue}' is in use`;
+  const message = `'${errValue}' is taken`;
   return new AppError(message, 400);
 };
 

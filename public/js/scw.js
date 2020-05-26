@@ -205,28 +205,34 @@ const tooltipHandler = function(tooltip) {
   this.hover = false;
 
   this.tooltipOff = () => {
+    console.log('Hiding tooltip: ', tooltip);
     tooltip.style.visibility = 'hidden';
   };
 
   this.tooltipOn = () => {
+    console.log('Showing tooltip: ', tooltip);
     tooltip.style.visibility = 'visible';
   };
 
   this.tooltipClick = () => {
+    console.log('click detected');
     this.click = this.click == false ? true : false;
     if(this.click)
       this.tooltipOn();
-    else if(!this.hover)
+    else
       this.tooltipOff();
   };
 
-  this.tooltipMouseleave = () => {
+  this.tooltipMouseleave = async () => {
+    console.log('mouse leave detected');
     this.hover = false;
-    if(!this.click)
+    if(!this.click){
       this.tooltipOff();
+    }
   };
 
   this.tooltipMouseover = () => {
+    console.log('mouse over detected');
     this.hover = true;
     this.tooltipOn();
   };
