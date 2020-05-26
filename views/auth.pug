@@ -1,2 +1,10 @@
-a.a.a--btn.a--btn-login.ani-hover-shiftup(href='/login') Login
-a.a.a--btn.a--btn-signup.ani-hover-shiftup(href='/signup') Signup
+a.a.a--btn.a--btn-login(
+  href='/login'
+  class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
+)
+  | Login
+a.a.a--btn.a--btn-signup(
+  href='/signup'
+  class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
+)
+  | Signup

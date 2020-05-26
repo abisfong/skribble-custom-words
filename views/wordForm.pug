@@ -1,7 +1,9 @@
 form(method='POST' action='/').form
   .form__group.form__group--wordform
     label(for='submitBtn').form__label.form__label--wordform
-      i.i.i--wordform.fas.fa-plus.ani-hover-shiftup
+      i.i.i--wordform.fas.fa-plus(
+        class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
+      )
       input.input.input--submit-hidden(
         type='submit'
         id='submitBtn'
@@ -17,9 +19,13 @@ form(method='POST' action='/').form
     )
     .c-wordlist__difficulty.c-wordlist__difficulty--difficulty-selection
       .c-container.c-container--difficulty-selection
-        i.i.i--wordform.fas.fa-angle-left.ani-hover-shiftup
+        i.i.i--wordform.fas.fa-angle-left(
+          class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
+        )
       .c-container.c-container--difficulty-selection
-        i.i.i--wordform.fas.fa-angle-right.ani-hover-shiftup
+        i.i.i--wordform.fas.fa-angle-right(
+          class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
+        )
       input.input--submit-hidden(name='difficulty' value='easy')
 
 

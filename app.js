@@ -1,5 +1,6 @@
 // jshint esversion: 8
 const cookieParser = require('cookie-parser');
+const device = require('express-device');
 const express = require('express');
 const favicon = require('serve-favicon');
 const helmet = require('helmet');
@@ -44,10 +45,14 @@ app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
 
-// app.use((req, res, next) => {
-//   console.log(req.cookies);
-//   next();
-// });
+// Get device type
+app.use(device.capture());
+
+// Add device type to locals for pug
+app.use((req, res, next) => {
+  res.locals.deviceType = req.device.type;
+  next();
+});
 
 // Sanitize data against NoSQL query injection
 app.use(mongoSanitize());

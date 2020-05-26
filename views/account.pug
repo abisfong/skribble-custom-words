@@ -25,7 +25,10 @@ block content
         autocomplete='off'
         spellcheck='false'
       )
-      input.input.input--submit.ani-hover-shiftup(type='submit' value='Update')
+      if deviceType !== 'desktop'
+        input.input.input--submit(type='submit' value='Update')
+      else
+        input.input.input--submit.ani-hover-shiftup(type='submit' value='Update')
     form.form.form--password-change
       p.p.p--account Change Passsword
       input#current-password.input.input--border-bottom(
@@ -51,7 +54,10 @@ block content
         required
         minlength='8'
       )
-      input.input.input--submit.ani-hover-shiftup(type='submit' value='Update')
+      if deviceType !== 'desktop'
+        input.input.input--submit(type='submit' value='Update')
+      else
+        input.input.input--submit.ani-hover-shiftup(type='submit' value='Update')
     h1.h1.h1--your-list-title YOUR LIST
     include list
 

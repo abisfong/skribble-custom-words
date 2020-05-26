@@ -30,10 +30,11 @@ if words.length > 0
       .c-wordlist__word.c-wordlist__word--label word
       .c-wordlist__difficulty.c-wordlist__difficulty--label difficulty
     each word in words
-      .c-wordlist__entry.ani-hover-shiftup(
+      .c-wordlist__entry(
         class= dupKey?
           dupKey === word.word ?
             'c-wordlist__entry--duplicate-entry' : '' : ''
+        class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
         style=`z-index: ${zIndex--};`
       )
         if user && (word.user.equals(user._id) || user.role === 'admin')
@@ -57,11 +58,23 @@ else
   .c-wordlist.c-wordlist--empty
     p.p.p--wordlist NO WORDS FOUND
     if user
-      a.a.a--user-action-msg.a--wordlist.ani-hover-shiftup(href='/') Add some words!
+      a.a.a--user-action-msg.a--wordlist(
+        href='/'
+        class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
+      )
+        | Add some words!
     else
-      a.a.a--user-action-msg.a--wordlist.ani-hover-shiftup(href='/signup') Sign up to add words!
+      a.a.a--user-action-msg.a--wordlist(
+        href='/signup'
+        class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
+      )
+        | Sign up to add words!
       br
-      a.a.a--user-action-msg.a--wordlist.ani-hover-shiftup(href='/login') Already have an account? Login
+      a.a.a--user-action-msg.a--wordlist(
+        href='/login'
+        class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
+      )
+        | Already have an account? Login
 
 
 

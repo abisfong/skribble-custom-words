@@ -712,14 +712,14 @@ input[type="submit"] {
   /* Spacing */
   display: flex;
   font-size: 18px;
-  justify-content: center;
+  justify-content: flex-start;
   /* calculated padding is (search_bar top margin) - (element font size) */
   padding-top: calc(3.25vh - .5em);
 }
 
 .nav__el {
   /* Spacing */
-  margin: 0 2%;
+  margin: 0 1em;
 
   /* Style */
   color: white;
@@ -849,17 +849,6 @@ input[type="submit"] {
 
   .h1--your-list-title {
     font-size: calc(73.15vw / 5.25)
-  }
-}
-
-@media (not(hover)) {
-  .ani-hover-shiftup:hover,
-  .ani-hover-shiftup:active {
-    -webkit-transform: none;
-    -mos-transform: none;
-    -o-transform: none;
-    transform: none;
-    text-shadow: none;
   }
 }
 

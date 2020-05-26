@@ -1,8 +1,25 @@
 nav.nav
   .nav__el
-    a.a.ani-hover-shiftup(href='/') home
+    a.a(
+      href='/'
+      class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
+      style=
+        deviceType !== 'desktop' ?
+          user ?
+            'margin-left: calc(50vw - 7.65em);'
+            : 'margin-left: calc(50vw - 2.55em);'
+          : ''
+    )
+      | home
   if user
     .nav__el
-      a.a.ani-hover-shiftup(href='/me')= user.username
+      a.a(
+        href='/me'
+        class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
+      )
+        | #{user.username}
     .nav__el
-      a#logout.a.ani-hover-shiftup logout
+      a#logout.a(
+        class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
+      )
+        | logout

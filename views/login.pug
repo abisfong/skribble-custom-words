@@ -5,8 +5,9 @@ block content
     form#login-form.form
       input#user.input(type='text' placeholder='email or username')
       input#password.input(type='password' placeholder='password' minlength='8')
-      input.input.input--submit.input--submit-bg-magenta.ani-hover-shiftup(
+      input.input.input--submit.input--submit-bg-magenta(
         type='submit'
+        class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
       )
     //-a.a.a--login(href='/forgotPassword') forgot your password?
     br
