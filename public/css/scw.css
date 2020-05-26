@@ -179,10 +179,9 @@ input[type="submit"] {
   visibility: hidden;
 }
 
-.c-wordlist__action-btn:hover + .c-tooltip{
-  /* Style */
+/* .c-wordlist__action-btn:hover + .c-tooltip{
   visibility: visible;
-}
+} */
 
 .c-tooltip--wordlist-entry-owner {
   /* Position */
@@ -319,9 +318,19 @@ input[type="submit"] {
   background-color: #2f2f30;
 }
 
-.c-wordlist__action-btn--bg-light-grey {
+.c-wordlist__action-btn--bg-dark-grey:active {
+  /* Style */
+  background-color: #2b2b30;
+}
+
+.c-wordlist__action-btn--bg-gold {
   /* Style */
   background-color: #fbaf08;
+}
+
+.c-wordlist__action-btn--bg-gold:active {
+  /* Style */
+  background-color: #db9907;
 }
 
 .c-wordlist__word {
@@ -703,7 +712,7 @@ input[type="submit"] {
   /* Spacing */
   display: flex;
   font-size: 18px;
-  justify-content: flex-start;
+  justify-content: center;
   /* calculated padding is (search_bar top margin) - (element font size) */
   padding-top: calc(3.25vh - .5em);
 }
@@ -799,10 +808,6 @@ input[type="submit"] {
     /* Style */
     font-size: 27.36vw;
   }
-
-  .nav {
-    justify-content: center;
-  }
 }
 
 @media screen and (max-width: 768px) {
@@ -847,7 +852,7 @@ input[type="submit"] {
   }
 }
 
-/* @media (not(hover)) {
+@media (not(hover)) {
   .ani-hover-shiftup:hover,
   .ani-hover-shiftup:active {
     -webkit-transform: none;
@@ -856,7 +861,7 @@ input[type="submit"] {
     transform: none;
     text-shadow: none;
   }
-} */
+}
 
 
 

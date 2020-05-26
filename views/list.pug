@@ -7,7 +7,7 @@ if words.length > 0
       .c-wordlist__action-btn.c-wordlist__action-btn--bg-dark-grey
         .fas.fa-info-circle
       if(accountView)
-        .c-tooltip.c-tooltip--action-btn-usage
+        .c-tooltip.c-tooltip--action-btn-usage(style='visibility: hidden')
           b USER ACTION BUTTONS
           br
           br
@@ -15,7 +15,7 @@ if words.length > 0
           i.far.fa-trash-alt
           | &nbsp to delete an entry
       else
-        .c-tooltip.c-tooltip--action-btn-usage
+        .c-tooltip.c-tooltip--action-btn-usage(style='visibility: hidden')
           b USER ACTION BUTTONS
           br
           br
@@ -37,14 +37,14 @@ if words.length > 0
         style=`z-index: ${zIndex--};`
       )
         if user && (word.user.equals(user._id) || user.role === 'admin')
-          .c-wordlist__action-btn.c-wordlist__action-btn--bg-light-grey(
+          .c-wordlist__action-btn.c-wordlist__action-btn--bg-gold(
             onclick=`deleteWord("${word.word}")`
           )
             i.far.fa-trash-alt
         else
-          .c-wordlist__action-btn.c-wordlist__action-btn--bg-light-grey
+          .c-wordlist__action-btn.c-wordlist__action-btn--bg-gold
             .fas.fa-info-circle
-          .c-tooltip.c-tooltip--wordlist-entry-owner
+          .c-tooltip.c-tooltip--wordlist-entry-owner(style='visibility: hidden')
             | #{word.username}
         .c-wordlist__word= word.word
         if word.difficulty === 'easy'

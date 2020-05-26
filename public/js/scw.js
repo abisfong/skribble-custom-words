@@ -3,6 +3,7 @@
  * VARIABLES
  * -------------------------------------------------------------------------- */
 // DOM elements
+const actionButtons = document.getElementsByClassName('c-wordlist__action-btn');
 const difficultyInput = document.querySelector('input[name="difficulty"]');
 const difficultySelection = document.querySelector('.c-wordlist__difficulty--difficulty-selection');
 const difficultyArrowLeft = document.querySelector('.fa-angle-left');
@@ -13,7 +14,6 @@ const logoutBtn = document.querySelector('#logout');
 const loginForm = document.querySelector('#login-form');
 const passwordChangeForm = document.querySelector('.form--password-change');
 const signupForm = document.querySelector('#form-signup');
-const tooltips = document.getElementsByClassName('c-tooltip');
 const userInfoForm = document.querySelector('#form-user-info');
 const username = document.getElementById('username');
 const yourList = document.querySelector('.h1--your-list-title');
@@ -200,13 +200,37 @@ const signup = async (data) => {
   }
 };
 
-const tooltipToggle = el =>
-  () => {
-    if(el.style.visibility === 'hidden')
-      el.style.visibility = 'visible';
-    else
-      el.style.visibility = 'hidden';
+const tooltipHandler = function(tooltip) {
+  this.click = false;
+  this.hover = false;
+
+  this.tooltipOff = () => {
+    tooltip.style.visibility = 'hidden';
   };
+
+  this.tooltipOn = () => {
+    tooltip.style.visibility = 'visible';
+  };
+
+  this.tooltipClick = () => {
+    this.click = this.click == false ? true : false;
+    if(this.click)
+      this.tooltipOn();
+    else if(!this.hover)
+      this.tooltipOff();
+  };
+
+  this.tooltipMouseleave = () => {
+    this.hover = false;
+    if(!this.click)
+      this.tooltipOff();
+  };
+
+  this.tooltipMouseover = () => {
+    this.hover = true;
+    this.tooltipOn();
+  };
+};
 
 /* --------------------------------------------------------------------------
  * DELEGATION
@@ -275,14 +299,27 @@ if(signupForm){
   });
 }
 
-// if(tooltips) {
-//   for(var i = 0; i < tooltips.length; i++) {
-//     tooltips[i].addEventListener(
-//       'click',
-//       tooltipToggle(tooltips[i].children[0])
-//     );
-//   }
-// }
+if(actionButtons) {
+  for(var i = 0; i < actionButtons.length; i++) {
+    if(actionButtons[i].nextElementSibling.classList.contains('c-tooltip')){
+      let handler = new tooltipHandler(actionButtons[i].nextElementSibling);
+      actionButtons[i].addEventListener(
+        'click',
+        handler.tooltipClick
+      );
+
+      actionButtons[i].addEventListener(
+        'mouseover',
+        handler.tooltipMouseover
+      );
+
+      actionButtons[i].addEventListener(
+        'mouseleave',
+        handler.tooltipMouseleave
+      );
+    }
+  }
+}
 
 if(userInfoForm) {
   userInfoForm.addEventListener('submit', e => {
