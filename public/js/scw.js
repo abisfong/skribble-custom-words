@@ -342,7 +342,7 @@ if(userInfoForm) {
       data.lname = lname;
     if(email.length > 0)
       data.email = email;
-    if(username.value > 0)
+    if(username.value.length > 0)
       data.username = username.value;
 
     if(Object.values(data).length > 0)
