@@ -115,7 +115,7 @@ input[type="submit"] {
   color: white;
   position: fixed;
   text-align: center;
-  z-index: 10000;
+  z-index: 99999;
 }
 
 .c-alert--error {
@@ -736,6 +736,7 @@ input[type="submit"] {
   /* Position */
   position: fixed;
   top: 0;
+  z-index: 99998;
 
   /* Spacing */
   display: flex;
