@@ -5,4 +5,8 @@ block content
       include wordForm
     else
       include auth
-    include list
+    if words.length > 0
+      include list
+    else
+      include nolist
+    include custom-words

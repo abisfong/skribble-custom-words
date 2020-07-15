@@ -48,30 +48,53 @@ exports.deleteWord = catchAsync(async (req, res, next) => {
 
 exports.getCustomWords = catchAsync(async (req, res, next) => {
   const difficulties = ['easy', 'medium', 'hard'];
+  const maxWords = req.body.limit || 50;
   let words = [];
   let query = Word.find();
 
+  // shuffle function
+  const shuffle = arr => {
+    var currentIndex = arr.length, randomIndex, temp;
+
+    while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temp = arr[currentIndex];
+      arr[currentIndex] = arr[randomIndex];
+      arr[randomIndex] = temp;
+    }
+
+    return arr;
+  };
+
   // get words based on desired difficulty
   if(difficulties.includes(req.body.difficulty)){
-    let docs = await query.find({difficulty: req.body.difficulty});
+    let docs = shuffle(await query.find({difficulty: req.body.difficulty}));
+
+    console.log(docs);
     docs.forEach(doc => {
-      words.push(doc.word);
+      if(words.length < maxWords)
+        words.push(doc.word);
     });
 
-    // Fill in word array if less than 30
-    if(req.body.fill && words.length < 30) {
-      docs = await query.find({difficulty: {$ne: req.body.difficulty}});
+    // Fill in word array if less than limit
+    if(words.length < maxWords && req.body.fill) {
+      docs = shuffle(await query.find({difficulty: {$ne: req.body.difficulty}}));
       docs.forEach(doc => {
-        words.push(doc.word);
+        if(words.length < maxWords)
+          words.push(doc.word);
       });
     }
 
   // If no difficulty specified, divide words evenly
   } else {
-    const easyDocs = await query.find({difficulty: 'easy'});
-    const mediumDocs = await query.find({difficulty: 'medium'});
-    const hardDocs = await query.find({difficulty: 'hard'});
-    const maxWords = 30;
+    const easyDocs = shuffle(await query.find({difficulty: 'easy'}));
+    const mediumDocs = shuffle(await query.find({difficulty: 'medium'}));
+    const hardDocs = shuffle(await query.find({difficulty: 'hard'}));
 
 
     for(let i = 0, empty = 0; empty < 3; ++i){
@@ -97,9 +120,7 @@ exports.getCustomWords = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     results: words.length,
-    data: {
-      words
-    }
+    words
   });
 });
 

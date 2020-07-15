@@ -1,80 +1,58 @@
 - let zIndex = words.length + 1;
 -words = words.reverse();
 //-words = [];
-if words.length > 0
-  .c-wordlist
-    .c-wordlist__entry.c-wordlist__entry--labels(style=`z-index: ${zIndex--};`)
-      .c-wordlist__action-btn.c-wordlist__action-btn--bg-dark-grey
-        .fas.fa-info-circle
-      if(accountView)
-        .c-tooltip.c-tooltip--action-btn-usage(style='visibility: hidden')
-          b USER ACTION BUTTONS
-          br
-          br
-          | Use &nbsp
-          i.far.fa-trash-alt
-          | &nbsp to delete an entry
-      else
-        .c-tooltip.c-tooltip--action-btn-usage(style='visibility: hidden')
-          b USER ACTION BUTTONS
-          br
-          br
-          | Use &nbsp
-          i.fas.fa-info-circle
-          | &nbsp to look at the username of the owner of an entry
-          br
-          br
-          | Use &nbsp
-          i.far.fa-trash-alt
-          | &nbsp to delete an entry that you own
-      .c-wordlist__word.c-wordlist__word--label word
-      .c-wordlist__difficulty.c-wordlist__difficulty--label difficulty
-    each word in words
-      .c-wordlist__entry(
-        class= dupKey?
-          dupKey === word.word ?
-            'c-wordlist__entry--duplicate-entry' : '' : ''
-        class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
-        style=`z-index: ${zIndex--};`
-      )
-        if user && (word.user.equals(user._id) || user.role === 'admin')
-          .c-wordlist__action-btn.c-wordlist__action-btn--bg-gold(
-            onclick=`deleteWord("${word.word}")`
-          )
-            i.far.fa-trash-alt
-        else
-          .c-wordlist__action-btn.c-wordlist__action-btn--bg-gold
-            .fas.fa-info-circle
-          .c-tooltip.c-tooltip--wordlist-entry-owner(style='visibility: hidden')
-            | #{word.username}
-        .c-wordlist__word= word.word
-        if word.difficulty === 'easy'
-          .c-wordlist__difficulty.c-wordlist__difficulty--easy
-        if word.difficulty === 'medium'
-          .c-wordlist__difficulty.c-wordlist__difficulty--medium
-        if word.difficulty === 'hard'
-          .c-wordlist__difficulty.c-wordlist__difficulty--hard
-else
-  .c-wordlist.c-wordlist--empty
-    p.p.p--wordlist NO WORDS FOUND
-    if user
-      a.a.a--user-action-msg.a--wordlist(
-        href='/'
-        class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
-      )
-        | Add some words!
+.c-wordlist
+  .c-wordlist__entry.c-wordlist__entry--labels(style=`z-index: ${zIndex--};`)
+    .c-wordlist__action-btn.c-wordlist__action-btn--bg-dark-grey
+      .fas.fa-info-circle
+    if(accountView)
+      .c-tooltip.c-tooltip--action-btn-usage(style='visibility: hidden')
+        b USER ACTION BUTTONS
+        br
+        br
+        | Use &nbsp
+        i.far.fa-trash-alt
+        | &nbsp to delete an entry
     else
-      a.a.a--user-action-msg.a--wordlist(
-        href='/signup'
-        class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
-      )
-        | Sign up to add words!
-      br
-      a.a.a--user-action-msg.a--wordlist(
-        href='/login'
-        class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
-      )
-        | Already have an account? Login
+      .c-tooltip.c-tooltip--action-btn-usage(style='visibility: hidden')
+        b USER ACTION BUTTONS
+        br
+        br
+        | Use &nbsp
+        i.fas.fa-info-circle
+        | &nbsp to look at the username of the owner of an entry
+        br
+        br
+        | Use &nbsp
+        i.far.fa-trash-alt
+        | &nbsp to delete an entry that you own
+    .c-wordlist__word.c-wordlist__word--label word
+    .c-wordlist__difficulty.c-wordlist__difficulty--label difficulty
+  each word in words
+    .c-wordlist__entry(
+      class= dupKey?
+        dupKey === word.word ?
+          'c-wordlist__entry--duplicate-entry' : '' : ''
+      class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
+      style=`z-index: ${zIndex--};`
+    )
+      if user && (word.user.equals(user._id) || user.role === 'admin')
+        .c-wordlist__action-btn.c-wordlist__action-btn--bg-gold(
+          onclick=`deleteWord("${word.word}")`
+        )
+          i.far.fa-trash-alt
+      else
+        .c-wordlist__action-btn.c-wordlist__action-btn--bg-gold
+          .fas.fa-info-circle
+        .c-tooltip.c-tooltip--wordlist-entry-owner(style='visibility: hidden')
+          | #{word.username}
+      .c-wordlist__word= word.word
+      if word.difficulty === 'easy'
+        .c-wordlist__difficulty.c-wordlist__difficulty--easy
+      if word.difficulty === 'medium'
+        .c-wordlist__difficulty.c-wordlist__difficulty--medium
+      if word.difficulty === 'hard'
+        .c-wordlist__difficulty.c-wordlist__difficulty--hard
 
 
 

@@ -1,0 +1,20 @@
+.c-wordlist.c-wordlist--empty
+  p.p.p--wordlist NO WORDS FOUND
+  if user
+    a.a.a--user-action-msg.a--wordlist(
+      href='/'
+      class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
+    )
+      | Add some words!
+  else
+    a.a.a--user-action-msg.a--wordlist(
+      href='/signup'
+      class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
+    )
+      | Sign up to add words!
+    br
+    a.a.a--user-action-msg.a--wordlist(
+      href='/login'
+      class= deviceType !== 'desktop' ? '' : 'ani-hover-shiftup'
+    )
+      | Already have an account? Login

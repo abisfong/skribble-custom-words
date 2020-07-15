@@ -2,7 +2,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-// SCHEMA OPTIONS
 const toObjAndJSONOptions = {
   getters: true,
   virtuals: true,
@@ -10,37 +9,30 @@ const toObjAndJSONOptions = {
   versionKey: true
 };
 
-const wordSchema = new mongoose.Schema({
-  word: {
-    type: String,
-    unique: [true, 'This word exists'],
-    required: [true, 'Please specify a word']
-  },
+var collectionSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now()
   },
-  length: {
-    type: Number,
-    required: true,
-  },
-  difficulty: {
-    type: String,
-    required: true
-  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
-    required: [true, 'Word "user" field must reference a user']
+    required: [true, 'Collection "user" field must reference a user']
   },
-  username: String
+  // use word ids to populate on client side using all words to
+  // reduce database queries
+  words: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'Word',
+    required: [true, 'Collection "word" must reference a word']
+  }],
 }, {
   toJSON: toObjAndJSONOptions,
   toObject: toObjAndJSONOptions,
   id: false
 });
 
-module.exports = mongoose.model('Word', wordSchema);
+
 
 
 

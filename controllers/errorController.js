@@ -23,6 +23,11 @@ const handleJWTValidationError = () => {
   return new AppError(message, 401);
 };
 
+const handleJWTExpireError = () => {
+  const message = 'Token expired. Please login again';
+  return new AppError(message, 401);
+};
+
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,

@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "start:dev": "nodemon server.js"
   },
   "author": "Abraham Fong",
   "license": "ISC",
@@ -26,6 +27,7 @@
     "morgan": "^1.10.0",
     "pug": "^2.0.4",
     "serve-favicon": "^2.5.0",
+    "terminal-kit": "^1.35.8",
     "validator": "^13.0.0",
     "xss-clean": "^0.1.1"
   },

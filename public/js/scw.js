@@ -3,7 +3,9 @@
  * VARIABLES
  * -------------------------------------------------------------------------- */
 // DOM elements
-const actionButtons = document.getElementsByClassName('c-wordlist__action-btn');
+const copyBtn = document.querySelector('.a--btn-copy');
+const customWordsBtn = document.querySelector('.a--btn-custom-words');
+const customWordsTextBox = document.querySelector('.c-wordlist__entry--custom-words');
 const difficultyInput = document.querySelector('input[name="difficulty"]');
 const difficultySelection = document.querySelector('.c-wordlist__difficulty--difficulty-selection');
 const difficultyArrowLeft = document.querySelector('.fa-angle-left');
@@ -16,17 +18,20 @@ const passwordChangeForm = document.querySelector('.form--password-change');
 const signupForm = document.querySelector('#form-signup');
 const userInfoForm = document.querySelector('#form-user-info');
 const username = document.getElementById('username');
+const wordListActionButtons = document.getElementsByClassName('c-wordlist__action-btn');
 const yourList = document.querySelector('.h1--your-list-title');
 
 // helper variables
 var selection = 0;
+var tooltips = [];
+var handlers = [];
 var timerId;
 
 /* --------------------------------------------------------------------------
  * FUNCTIONS
  * -------------------------------------------------------------------------- */
 // change background color of difficulty selection in word form
-const changeColor = function(dir) {
+const changeColor = dir => {
   if(dir == 'prev')
     selection = selection - 1 >= 0 ? selection - 1 : 2;
   else
@@ -101,6 +106,29 @@ const checkUsername = async () => {
   }
 };
 
+const clipboardCopy = (el) => {
+  // Create an auxiliary hidden input
+  var aux = document.createElement("input");
+
+  // Get the text from the element passed into the input
+  aux.setAttribute("value", el.innerHTML);
+
+  // Append the aux input to the body
+  document.body.appendChild(aux);
+
+  // Highlight the content
+  aux.select();
+
+  // Execute the copy command
+  document.execCommand("copy");
+
+  // Remove the input from the body
+  document.body.removeChild(aux);
+
+  /* Alert the copied text */
+  showAlert('success', 'Text copied to clipboard!', 2.5);
+};
+
 const debounce = (fn, delay) => {
   clearTimeout(timerId);
   timerId = setTimeout(fn, delay);
@@ -118,6 +146,22 @@ const deleteWord = async (word) => {
 
     if (res.status == 204)
       location.assign('/');
+  } catch(err) {
+    showAlert('error', err.response.data.message);
+  }
+};
+
+const getCustomWords = async (difficulty='mixed', fill=false) => {
+  try {
+    const res = await axios({
+      method: 'GET',
+      url: '/api/v1/words/custom',
+      data: {
+        difficulty,
+        fill
+      }
+    });
+    return res.data.words;
   } catch(err) {
     showAlert('error', err.response.data.message);
   }
@@ -204,18 +248,7 @@ const tooltipHandler = function(tooltip) {
   this.click = false;
   this.hover = false;
 
-  this.tooltipOff = () => {
-    console.log('Hiding tooltip: ', tooltip);
-    tooltip.style.visibility = 'hidden';
-  };
-
-  this.tooltipOn = () => {
-    console.log('Showing tooltip: ', tooltip);
-    tooltip.style.visibility = 'visible';
-  };
-
-  this.tooltipClick = () => {
-    console.log('click detected');
+  this.toggleClick = () => {
     this.click = this.click == false ? true : false;
     if(this.click)
       this.tooltipOn();
@@ -223,8 +256,29 @@ const tooltipHandler = function(tooltip) {
       this.tooltipOff();
   };
 
+  this.tooltipOff = (_tooltip=tooltip) => {
+    _tooltip.style.visibility = 'hidden';
+  };
+
+  this.tooltipOn = (_tooltip=tooltip) => {
+    _tooltip.style.visibility = 'visible';
+  };
+
+  this.tooltipClick = () => {
+    this.toggleClick();
+
+    // Hide all other tooltips
+    for(let i = 0; i < tooltips.length; ++i)
+      // Do not hide currently clicked tooltip
+      if(tooltips[i] != tooltip)
+        // Only toggle tooltips that are visible
+        if(tooltips[i].style.visibility == 'visible')
+          // Use corresponding handler of the open tooltip to hide tooltip
+          handlers[i].toggleClick();
+  };
+
   this.tooltipMouseleave = async () => {
-    console.log('mouse leave detected');
+    // console.log('mouse leave detected');
     this.hover = false;
     if(!this.click){
       this.tooltipOff();
@@ -232,7 +286,7 @@ const tooltipHandler = function(tooltip) {
   };
 
   this.tooltipMouseover = () => {
-    console.log('mouse over detected');
+    // console.log('mouse over detected');
     this.hover = true;
     this.tooltipOn();
   };
@@ -241,13 +295,27 @@ const tooltipHandler = function(tooltip) {
 /* --------------------------------------------------------------------------
  * DELEGATION
  * -------------------------------------------------------------------------- */
+// Get 30 custom words
+if(customWordsBtn) {
+  customWordsBtn.addEventListener('click', async () => {
+    const words = await getCustomWords();
+    customWordsTextBox.innerHTML = words.sort().join(', ');
+  });
+
+  copyBtn.addEventListener('click', () => {
+    if(customWordsTextBox.innerHTML.length <= 0)
+      showAlert('error', 'No custom words to copy', 2.5);
+    else
+      clipboardCopy(customWordsTextBox);
+  });
+}
 
 // Change color of difficulty selection in word form on arrow click
 if(difficultyArrowLeft && difficultyArrowRight) {
-  difficultyArrowLeft.addEventListener('click', function() {
+  difficultyArrowLeft.addEventListener('click', () => {
     changeColor('prev');
   });
-  difficultyArrowRight.addEventListener('click', function() {
+  difficultyArrowRight.addEventListener('click', () => {
     changeColor('next');
   });
 }
@@ -259,7 +327,10 @@ if(duplicateEntry) {
 
 if(loginForm) {
   loginForm.addEventListener('submit', e => {
-    e.preventDefault();
+    if (e.preventDefault)
+        e.preventDefault();
+    else
+        e.returnValue= false;
     const user = document.getElementById('user').value;
     const password = document.getElementById('password').value;
     login(user, password);
@@ -274,7 +345,10 @@ if(logoutBtn) {
 
 if(passwordChangeForm) {
   passwordChangeForm.addEventListener('submit', e => {
-    e.preventDefault();
+    if (e.preventDefault)
+        e.preventDefault();
+    else
+        e.returnValue= false;
     const password = document.getElementById('current-password').value;
     const newPassword = document.getElementById('new-password').value;
     const newPasswordConfirm = document.getElementById('confirm-new-password').value;
@@ -288,7 +362,10 @@ if(passwordChangeForm) {
 
 if(signupForm){
   signupForm.addEventListener('submit', e => {
-    e.preventDefault();
+    if (e.preventDefault)
+        e.preventDefault();
+    else
+        e.returnValue= false;
     const fname = document.getElementById('fname').value;
     const lname = document.getElementById('lname').value;
     const email = document.getElementById('email').value;
@@ -305,33 +382,14 @@ if(signupForm){
   });
 }
 
-if(actionButtons) {
-  for(var i = 0; i < actionButtons.length; i++) {
-    if(actionButtons[i].nextElementSibling.classList.contains('c-tooltip')){
-      let handler = new tooltipHandler(actionButtons[i].nextElementSibling);
-      actionButtons[i].addEventListener(
-        'click',
-        handler.tooltipClick
-      );
-
-      actionButtons[i].addEventListener(
-        'mouseover',
-        handler.tooltipMouseover
-      );
-
-      actionButtons[i].addEventListener(
-        'mouseleave',
-        handler.tooltipMouseleave
-      );
-    }
-  }
-}
-
 if(userInfoForm) {
   userInfoForm.addEventListener('submit', e => {
     let data = {};
 
-    e.preventDefault();
+    if (e.preventDefault)
+        e.preventDefault();
+    else
+        e.returnValue= false;
     const fname = document.getElementById('fname').value;
     const lname = document.getElementById('lname').value;
     const email = document.getElementById('email').value;
@@ -355,6 +413,57 @@ if(username) {
   username.addEventListener('keyup', e => {
     debounce(checkUsername, 1200);
   });
+}
+
+if(wordListActionButtons) {
+  // Hide open tooltips if:
+  //   - Mouse click is off any action button
+  //   - Mouse click is on an action button, but do not hide tooltip of clicked
+  //     action button
+  document.addEventListener('mouseup', e => {
+    // Do nothing if target is an action button
+    for(let i = 0; i < wordListActionButtons.length; ++i)
+      if(e.target == wordListActionButtons[i] || e.target == wordListActionButtons[i].childNodes[0])
+        return;
+
+    // Close all tooltips
+    for(let i = 0; i < tooltips.length; ++i)
+      // Only toggle tooltips that are visible
+      if(tooltips[i].style.visibility == 'visible')
+        // Use corresponding handler of the open tooltip to hide tooltip
+        handlers[i].toggleClick();
+  });
+
+  // Add event listeners to each action button that displays a tooltip
+  for(var i = 0; i < wordListActionButtons.length; i++) {
+    // Check if action button is for a tooltip
+    if(wordListActionButtons[i].nextElementSibling.classList.contains('c-tooltip')){
+      // Give handler action button's tooltip to toggle
+      let tooltip = wordListActionButtons[i].nextElementSibling;
+      let handler = new tooltipHandler(tooltip);
+
+      // Save tooltips in array for use in handler function: tooltipClick
+      tooltips.push(tooltip);
+
+      // Save handlers in array for use in handler function: tooltipClick
+      handlers.push(handler);
+
+      wordListActionButtons[i].addEventListener(
+        'click',
+        handler.tooltipClick
+      );
+
+      wordListActionButtons[i].addEventListener(
+        'mouseover',
+        handler.tooltipMouseover
+      );
+
+      wordListActionButtons[i].addEventListener(
+        'mouseleave',
+        handler.tooltipMouseleave
+      );
+    }
+  }
 }
 
 // Scroll list into view on click of 'Your List' header in account view
