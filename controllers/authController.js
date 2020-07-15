@@ -32,8 +32,8 @@ const createResponse = (data, res, statusCode, user_id) => {
   };
 
   // activate secure cookie in production
-  // if(process.env.NODE_ENV === 'production')
-  //   cookieOptions.secure = true;
+  if(process.env.NODE_ENV === 'production')
+    cookieOptions.secure = true;
 
   // send token as http only cookie
   res.cookie('scw', token, cookieOptions);
