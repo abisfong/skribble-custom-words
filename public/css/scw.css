@@ -352,7 +352,7 @@ input[type="submit"] {
 .c-wordlist__word {
   /* Dimensions */
   box-sizing: border-box;
-  width: 55%;
+  width: 70%;
 
   /* Spacing */
   padding: 7px 0 7px 1vw;
@@ -373,7 +373,7 @@ input[type="submit"] {
 .c-wordlist__difficulty {
   /* Dimensions */
   box-sizing: border-box;
-  width: 35%;
+  width: 20%;
 
   /* Style */
   cursor: default;
@@ -719,7 +719,7 @@ input[type="submit"] {
 
 .input--wordform-searchbar {
   /* Dimensions */
-  width: 55%;
+  width: 75%;
 
   /* Spacing */
   margin: 0;
@@ -856,6 +856,7 @@ input[type="submit"] {
 }
 
 @media screen and (max-width: 768px) {
+
   .c-alert {
     /* Dimensions */
     width: 62.7vw;
@@ -869,8 +870,23 @@ input[type="submit"] {
     width: 62.7vw;
   }
 
+  .c-wordlist__difficulty {
+    /* Dimensions */
+    width: 40%;
+  }
+
+  .c-wordlist__word {
+    /* Dimensions */
+    width: 55%;
+  }
+
   .h1--your-list-title {
     font-size: calc(62.7vw / 5.25)
+  }
+
+  .input--wordform-searchbar {
+    /* Dimensions */
+    width: 55%;
   }
 
   .logo--login {
@@ -898,6 +914,16 @@ input[type="submit"] {
     width: 73.15vw;
   }
 
+  .c-wordlist__difficulty {
+    /* Dimensions */
+    width: 40%;
+  }
+
+  .c-wordlist__word {
+    /* Dimensions */
+    width: 55%;
+  }
+
   .logo--login {
     /* Style */
     font-size: 52.25vw;
@@ -910,6 +936,11 @@ input[type="submit"] {
 
   .h1--your-list-title {
     font-size: calc(73.15vw / 5.25)
+  }
+
+  .input--wordform-searchbar {
+    /* Dimensions */
+    width: 55%;
   }
 }
 
