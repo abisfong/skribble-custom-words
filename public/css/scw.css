@@ -456,6 +456,12 @@ input[type="submit"] {
   color: black;
 }
 
+.a--btn-copy:active,
+.a--btn-copy:hover {
+  /* Style */
+  color: black;
+}
+
 .a--btn-custom-words {
   /* Spacing */
   padding-left: 10px;
@@ -463,6 +469,13 @@ input[type="submit"] {
 
   /* Style */
   background-image: linear-gradient(.375turn, #272727, #2b272e, #383949);
+}
+
+.a--btn-custom-words:hover,
+.a--btn-custom-words:active {
+  /* Style */
+  color: white;
+  text-shadow: none;
 }
 
 .a--btn-login {
@@ -877,7 +890,12 @@ input[type="submit"] {
 
   .c-wordlist__word {
     /* Dimensions */
-    width: 55%;
+    width: 45%;
+  }
+
+  .form__label--wordform {
+    /* Dimensions */
+    width: 15%;
   }
 
   .h1--your-list-title {
@@ -886,7 +904,7 @@ input[type="submit"] {
 
   .input--wordform-searchbar {
     /* Dimensions */
-    width: 55%;
+    width: 45%;
   }
 
   .logo--login {
@@ -921,7 +939,12 @@ input[type="submit"] {
 
   .c-wordlist__word {
     /* Dimensions */
-    width: 55%;
+    width: 45%;
+  }
+
+  .form__label--wordform {
+    /* Dimensions */
+    width: 15%;
   }
 
   .logo--login {
@@ -940,7 +963,7 @@ input[type="submit"] {
 
   .input--wordform-searchbar {
     /* Dimensions */
-    width: 55%;
+    width: 45%;
   }
 }
 
