@@ -330,7 +330,7 @@ input[type="submit"] {
 
   /* Position */
   position: sticky;
-  top: -1px;
+  top: 0;
 
   /* Style */
   background-color: #3d3d3f;
