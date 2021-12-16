@@ -19,11 +19,6 @@ exports.getAllUsers = factory.getAll(User);
 exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);
 
-exports.getMe = catchAsync(async (req, res, next) => {
-  req.params.id = req.user._id;
-  next();
-});
-
 exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) CREATE ERROR IF USER POSTS PASSWORD DATA
   if (req.body.password || req.body.passwordConfirm)
@@ -39,7 +34,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   );
 
   // 3) UPDATE USER DOCUMENT
-  const updatedUser = await User.findByIdAndUpdate(req.params.id, filteredBody, {
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true, // makes function return new document instead of old
     runValidators: true
   });

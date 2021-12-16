@@ -6,3 +6,5 @@ node_modules/
 
 # ignore sass files
 sass/
+
+/config.env

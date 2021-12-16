@@ -22,9 +22,9 @@ router.patch(
 
 router
   .route('/me')
-  .get(userController.getMe, userController.getUser)
-  .patch(userController.getMe, userController.updateMe)
-  .delete(userController.getMe, userController.deleteMe);
+  .get(userController.getUser)
+  .patch(userController.updateMe)
+  .delete(userController.deleteMe);
 
 // restrict to admin all routes below this point
 router.use(authController.restrictTo('admin'));

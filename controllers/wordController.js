@@ -22,6 +22,7 @@ exports.createWord = catchAsync(async (req, res, next) => {
       username: req.user.username
     });
   } catch(error) {
+    // Look for anything not error 11000: Duplicate entry
     if (error.code != 11000)
       throw error;
     res.dupKey = req.body.word.trim();

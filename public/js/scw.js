@@ -33,7 +33,7 @@ var timerId;
 // change background color of difficulty selection in word form
 const changeColor = dir => {
   if(dir == 'prev')
-    selection = selection - 1 >= 0 ? selection - 1 : 2;
+    selection = (selection - 1) % 3;
   else
     selection = (selection + 1) % 3;
 
@@ -127,11 +127,6 @@ const clipboardCopy = (el) => {
 
   /* Alert the copied text */
   showAlert('success', 'Text copied to clipboard!', 2.5);
-};
-
-const debounce = (fn, delay) => {
-  clearTimeout(timerId);
-  timerId = setTimeout(fn, delay);
 };
 
 const deleteWord = async (word) => {
